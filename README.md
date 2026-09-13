@@ -20,7 +20,7 @@ flowchart TB
         subgraph EKS["EKS Cluster (terraform-aws-modules/eks)"]
             ng[Managed node group]
             addons["Addons: coredns, kube-proxy, vpc-cni"]
-            ms[metrics-server (Helm)]
+            ms["metrics-server (Helm)"]
         end
         pub --> EKS
         priv --> EKS
