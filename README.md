@@ -8,6 +8,34 @@ environment per branch:
 | `develop` | dev | dev account | `k8s/develop/terraform.tfstate` |
 | `main` | prod | prod account | `k8s/main/terraform.tfstate` |
 
+## Architecture
+
+```mermaid
+flowchart TB
+    subgraph AWS["AWS us-east-1 (per branch: develop=dev, main=prod)"]
+        subgraph VPC["VPC (terraform-aws-modules/vpc)"]
+            pub[Public subnets]
+            priv[Private subnets]
+        end
+        subgraph EKS["EKS Cluster (terraform-aws-modules/eks)"]
+            ng[Managed node group]
+            addons["Addons: coredns, kube-proxy, vpc-cni"]
+            ms[metrics-server (Helm)]
+        end
+        pub --> EKS
+        priv --> EKS
+    end
+
+    consumers["Consumers via terraform_remote_state:<br/>os-management-database, os-management-lambda, os-management"]
+    EKS -.outputs.-> consumers
+```
+
+This repository owns only the shared network and cluster — it does **not**
+deploy the application, the database, or the Lambda functions. Those live in
+their own repositories and read this stack's outputs (`vpc_id`,
+`private_subnet_ids`, `node_security_group_id`, `cluster_name`) via
+`terraform_remote_state`.
+
 ## What it creates
 - VPC (public + private subnets, single NAT by default) via `terraform-aws-modules/vpc`.
 - EKS cluster + managed node group via `terraform-aws-modules/eks`, with `coredns`,
@@ -36,3 +64,8 @@ terraform init -backend=false                  # validation only (no remote stat
 terraform validate
 ```
 Real applies run in CI (`.github/workflows/cd.yml`) on pushes to `develop`/`main`.
+
+## Notes
+
+- Remember to add the **`soat-architecture`** user to this repository (Tech
+  Challenge delivery requirement).
