@@ -28,9 +28,9 @@ variable "app_name" {
 # EKS
 # =============================================================================
 variable "cluster_version" {
-  description = "Kubernetes version for the EKS control plane."
+  description = "Kubernetes version for the EKS control plane. Must match the cluster's actual current version (check `aws eks describe-cluster`) — EKS auto-upgrades control planes once a version exits Extended Support, and Terraform cannot move the version backward, only one minor version forward per apply."
   type        = string
-  default     = "1.30"
+  default     = "1.31"
 }
 
 variable "node_instance_type" {
