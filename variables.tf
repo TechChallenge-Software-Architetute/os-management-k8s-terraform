@@ -39,6 +39,12 @@ variable "node_instance_type" {
   default     = "t3.small"
 }
 
+variable "node_ami_type" {
+  description = "AMI type for the managed node group. AL2 was retired by EKS on 2025-11-26; use AL2023 (or Bottlerocket) for all supported versions."
+  type        = string
+  default     = "AL2023_x86_64_STANDARD"
+}
+
 variable "node_min_size" {
   description = "Minimum number of nodes."
   type        = number

@@ -75,6 +75,7 @@ module "eks" {
   eks_managed_node_groups = {
     default = {
       instance_types = [var.node_instance_type]
+      ami_type       = var.node_ami_type
       min_size       = var.node_min_size
       max_size       = var.node_max_size
       desired_size   = max(var.node_desired_size, var.node_min_size)
