@@ -33,12 +33,6 @@ variable "cluster_version" {
   default     = "1.30"
 }
 
-variable "node_instance_type" {
-  description = "EC2 instance type for the managed node group."
-  type        = string
-  default     = "t3.small"
-}
-
 variable "node_ami_type" {
   description = "AMI type for the managed node group. AL2 was retired by EKS on 2025-11-26; use AL2023 (or Bottlerocket) for all supported versions."
   type        = string
