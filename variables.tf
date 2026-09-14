@@ -34,13 +34,11 @@ variable "cluster_version" {
 }
 
 variable "node_instance_type" {
-  # t3.medium (2 vCPU / 4 GiB) — t3.small's ~1.5 GiB allocatable could not fit
-  # the app pod (512Mi request) alongside the Datadog DaemonSet + Cluster Agent,
-  # metrics-server and kube-system, causing pods to stay Pending and the app
-  # rollout to time out.
+  # t3.small is the largest type this Free Tier account can launch — larger
+  # types (e.g. t3.medium) are rejected with "not eligible for Free Tier".
   description = "EC2 instance type for the managed node group."
   type        = string
-  default     = "t3.medium"
+  default     = "t3.small"
 }
 
 variable "node_ami_type" {
