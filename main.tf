@@ -74,7 +74,7 @@ module "eks" {
 
   eks_managed_node_groups = {
     default = {
-      instance_types = ["t3.micro", "t3.small", "t3.medium"]
+      instance_types = ["t3.micro", "t3.small"]
       ami_type       = var.node_ami_type
       min_size       = var.node_min_size
       max_size       = var.node_max_size
