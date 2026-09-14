@@ -25,9 +25,9 @@ environment per branch:
 `cluster_name`, `cluster_endpoint`, `cluster_ca_certificate` (sensitive), `region`.
 
 ## Configuration
-Shared AWS auth/account/state-bucket come from **org-level** variables/secrets, suffixed by
-branch (`*_MAIN` / `*_DEVELOP`); `AWS_REGION` is a repo/environment variable. See the app
-repo's `DEPENDENCIES.md` §5 for the full matrix.
+Shared AWS auth/account/state-bucket come from **org-level secrets**, suffixed by
+branch (`*_MAIN` / `*_DEVELOP`); `AWS_REGION` is a single org-level secret shared by
+both branches (no suffix). See the app repo's `DEPENDENCIES.md` §5 for the full matrix.
 
 ## Local use
 ```bash
