@@ -31,6 +31,8 @@ jobs:
         with:
           aws-access-key-id: ${{ github.ref_name == 'main' && secrets.AWS_ACCESS_KEY_ID_MAIN || secrets.AWS_ACCESS_KEY_ID_DEVELOP }}
           aws-secret-access-key: ${{ github.ref_name == 'main' && secrets.AWS_SECRET_ACCESS_KEY_MAIN || secrets.AWS_SECRET_ACCESS_KEY_DEVELOP }}
+          # develop uses temporary (ASIA...) lab credentials, which require a session token.
+          aws-session-token: ${{ github.ref_name != 'main' && secrets.AWS_SESSION_TOKEN_DEVELOP || '' }}
           aws-region: ${{ env.AWS_REGION }}
 
       - uses: hashicorp/setup-terraform@v3
