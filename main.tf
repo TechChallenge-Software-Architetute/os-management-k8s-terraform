@@ -9,11 +9,19 @@
 locals {
   cluster_name = "${var.app_name}-${var.environment}"
 
+  # Follow the region instead of hardcoding AZ names; the override still wins.
+  azs = length(var.availability_zones) > 0 ? var.availability_zones : slice(data.aws_availability_zones.available.names, 0, 2)
+
   tags = merge({
     Project     = "os-management"
     Component   = "k8s-terraform"
     Environment = var.environment
   }, var.tags)
+}
+
+# AZs of the configured region (used when var.availability_zones is empty).
+data "aws_availability_zones" "available" {
+  state = "available"
 }
 
 # -----------------------------------------------------------------------------
@@ -26,7 +34,7 @@ module "vpc" {
   name = "${local.cluster_name}-vpc"
   cidr = var.vpc_cidr
 
-  azs             = var.availability_zones
+  azs             = local.azs
   private_subnets = var.private_subnets
   public_subnets  = var.public_subnets
 

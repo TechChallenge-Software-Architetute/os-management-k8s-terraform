@@ -75,9 +75,9 @@ variable "vpc_cidr" {
 }
 
 variable "availability_zones" {
-  description = "AZs for the subnets (minimum 2 for EKS)."
+  description = "AZs for the subnets (minimum 2 for EKS). Empty = first two available AZs of aws_region."
   type        = list(string)
-  default     = ["us-east-1a", "us-east-1b"]
+  default     = []
 }
 
 variable "private_subnets" {
