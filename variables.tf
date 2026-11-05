@@ -33,14 +33,6 @@ variable "cluster_version" {
   default     = "1.31"
 }
 
-variable "node_instance_type" {
-  # t3.small is the largest type this Free Tier account can launch — larger
-  # types (e.g. t3.medium) are rejected with "not eligible for Free Tier".
-  description = "EC2 instance type for the managed node group."
-  type        = string
-  default     = "t3.small"
-}
-
 variable "node_ami_type" {
   description = "AMI type for the managed node group. AL2 was retired by EKS on 2025-11-26; use AL2023 (or Bottlerocket) for all supported versions."
   type        = string
