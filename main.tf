@@ -74,6 +74,10 @@ module "eks" {
   # The CI IAM principal that creates the cluster gets Kubernetes admin.
   enable_cluster_creator_admin_permissions = true
 
+  # No IRSA: the account's organization SCP denies iam:CreateOpenIDConnectProvider,
+  # and no workload uses service-account roles (apps get static keys).
+  enable_irsa = false
+
   cluster_addons = {
     coredns    = { most_recent = true }
     kube-proxy = { most_recent = true }
